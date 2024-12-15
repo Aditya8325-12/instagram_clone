@@ -1,15 +1,18 @@
-const express = require("express");
-require("dotenv").config();
-const user_auth = require("./routes/user_auth");
-const mongoose = require("./config/mongoose_connection");
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "./config/mongoose_connection.js";
+import user_routes from "./routes/user_auth.js";
+import Error_handler from "./middleware/error_handler.js";
 
-const error_handler = require("./middleware/error_handler");
+dotenv.config();
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/auth", user_auth);
+app.use("/auth", user_routes);
 
 // handle request error
-app.use(error_handler);
-module.exports = app;
+app.use(Error_handler);
+
+export default app;
