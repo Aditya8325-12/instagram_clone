@@ -7,8 +7,27 @@ const userSchema = mongoose.Schema(
     username: { type: String, require: true },
     phone_no: String,
     password: { type: String, require: true },
-    isAdmin: Boolean,
+    isAdmin: { type: Boolean, default: false },
     token: String,
+    friendlist: [
+      {
+        friend_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+        status: {
+          type: String,
+          enum: ["pending", "accepted", "blocked"],
+          default: "pending",
+        },
+      },
+    ],
+    chats: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
   },
   { timestamps: true }
 );
